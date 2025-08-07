@@ -16,8 +16,27 @@ mkdir -p scripts
 # Make all scripts executable
 chmod +x scripts/*.sh
 
+# Ensure .git/hooks directory exists
+mkdir -p .git/hooks
+
+# Check if pre-commit hook exists, if not create it
+if [ ! -f ".git/hooks/pre-commit" ]; then
+    echo "Creating .git/hooks/pre-commit file..."
+    touch .git/hooks/pre-commit
+    echo "#!/bin/bash" >> .git/hooks/pre-commit
+    chmod +x .git/hooks/pre-commit
+fi
+
 # Make the git hook executable
 chmod +x .git/hooks/pre-commit
+
+# Verify the hook is now executable
+if [ -x ".git/hooks/pre-commit" ]; then
+    echo "✅ Git hook is now executable"
+else
+    echo "❌ Failed to make git hook executable"
+    exit 1
+fi
 
 echo "✅ Git hooks setup completed successfully!"
 echo ""
