@@ -1,0 +1,44 @@
+repos:
+  # Basic file checks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-added-large-files
+
+  # Custom Android checks
+  - repo: local
+    hooks:
+      # Checkstyle for Java files
+      - id: checkstyle
+        name: Checkstyle
+        entry: ./scripts/run-checkstyle.sh
+        language: script
+        files: \.java$
+        pass_filenames: true
+
+      # Android Lint
+      - id: android-lint
+        name: Android Lint
+        entry: ./scripts/run-android-lint.sh
+        language: script
+        files: \.(java|kt)$
+        pass_filenames: true
+
+      # Kotlin Lint (ktlint)
+      - id: kotlin-lint
+        name: Kotlin Lint
+        entry: ./scripts/run-kotlin-lint.sh
+        language: script
+        files: \.kt$
+        pass_filenames: true
+
+      # Debug code detection
+      - id: debug-code-check
+        name: Debug Code Check
+        entry: ./scripts/check-debug-code.sh
+        language: script
+        files: \.(java|kt)$
+        pass_filenames: true

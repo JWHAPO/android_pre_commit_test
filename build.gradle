@@ -1,6 +1,31 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
-alias(libs.plugins.android.application) apply false
+    alias(libs.plugins.android.application) apply false
     alias(libs.plugins.kotlin.android) apply false
     alias(libs.plugins.kotlin.compose) apply false
+}
+
+// Apply checkstyle to all subprojects
+subprojects {
+    apply plugin: 'checkstyle'
+    
+    tasks.register('checkstyle', Checkstyle) {
+        description 'Check code convention'
+        group 'verification'
+        configFile file("${rootProject.rootDir}/tools/sun_checks.xml")
+        source 'src/main/java'
+        include '**/*.java'
+        classpath = files()
+        ignoreFailures = false
+        
+//        reports {
+//            xml.required = true
+//            html.required = true
+//        }
+    }
+    
+    // Make checkstyle run before build
+//    tasks.named('preBuild').configure {
+//        dependsOn 'checkstyle'
+//    }
 }

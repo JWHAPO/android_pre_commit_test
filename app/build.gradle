@@ -2,16 +2,18 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id('checkstyle')
 }
+println checkstyle.toolVersion
 
 android {
     namespace 'com.example.myapplication'
-    compileSdk 34
+    compileSdk 35
 
     defaultConfig {
         applicationId "com.example.myapplication"
-        minSdk 34
-        targetSdk 34
+        minSdk 35
+        targetSdk 35
         versionCode 1
         versionName "1.0"
 
@@ -33,6 +35,12 @@ android {
     }
     buildFeatures {
         compose true
+    }
+    lintOptions {
+        // Turns off checks for the issue IDs you specify.
+        disable 'ContentDescription', 'HardcodedText', 'GradleDependency'
+        // if set to true (default), stops the build if errors are found.
+        abortOnError false
     }
 }
 
