@@ -17,11 +17,27 @@ subprojects {
         include '**/*.java'
         classpath = files()
         ignoreFailures = false
-        
-//        reports {
-//            xml.required = true
-//            html.required = true
-//        }
+
+        reports {
+            xml.required = true
+            html.required = true
+        }
+    }
+
+    tasks.register('copyGitHooks', Copy) {
+        from("${rootDir}/git-hooks/") {
+            include '**/*'
+            rename '(.*)', '$1'
+        }
+        into "${rootDir}/.git/hooks"
+    }
+
+    task installGitHooks(type: Exec) {
+        group 'git hooks'
+        workingDir rootDir
+        commandLine 'chmod'
+        args '-R', '+x', '.git/hooks/'
+        dependsOn copyGitHooks
     }
     
     // Make checkstyle run before build
