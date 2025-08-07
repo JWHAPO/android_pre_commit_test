@@ -1,8 +1,8 @@
 package com.example.myapplication.utils
 
 class LowGuy {
-    lateinit var name: String
+    lateinit var Name: String
     fun LogGuy(name: String){
-        this.name = name
+        this.Name = name
     }
 }
