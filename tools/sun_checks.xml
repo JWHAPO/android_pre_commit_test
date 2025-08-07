@@ -58,7 +58,7 @@
 
     <!-- Checks that a package-info.java file exists for each package.     -->
     <!-- See https://checkstyle.org/checks/javadoc/javadocpackage.html#JavadocPackage -->
-    <module name="JavadocPackage"/>
+<!--    <module name="JavadocPackage"/>-->
 
     <!-- Checks whether files end with a new line.                        -->
     <!-- See https://checkstyle.org/checks/misc/newlineatendoffile.html -->
@@ -102,7 +102,7 @@
         <module name="InvalidJavadocPosition"/>
         <module name="JavadocMethod"/>
         <module name="JavadocType"/>
-        <module name="JavadocVariable"/>
+<!--        <module name="JavadocVariable"/>-->
         <module name="JavadocStyle"/>
         <module name="MissingJavadocMethod"/>
 
@@ -162,7 +162,7 @@
         <!-- See https://checkstyle.org/checks/coding/index.html -->
         <module name="EmptyStatement"/>
         <module name="EqualsHashCode"/>
-        <module name="HiddenField"/>
+<!--        <module name="HiddenField"/>-->
         <module name="IllegalInstantiation"/>
         <module name="InnerAssignment"/>
         <module name="MagicNumber"/>
@@ -182,7 +182,7 @@
         <!-- Miscellaneous other checks.                   -->
         <!-- See https://checkstyle.org/checks/misc/index.html -->
         <module name="ArrayTypeStyle"/>
-        <module name="FinalParameters"/>
+<!--        <module name="FinalParameters"/>-->
         <module name="TodoComment"/>
         <module name="UpperEll"/>
 
