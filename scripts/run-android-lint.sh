@@ -1,44 +1,21 @@
 #!/bin/bash
 
-# Android Lint runner for pre-commit hook
-# Only runs on staged Java/Kotlin files
+# Runs Android Lint on the entire app module
+
+# 실제로 스테이징된 파일만 린팅하려면: Android Lint는 기본적으로 특정 파일만 대상으로 하는 기능이 제한적입니다. 대안으로는:
+
+# 파일별 개별 실행 (매우 느림)
+# 커스텀 lint 설정 파일 생성
+# 다른 도구 사용 (예: ktlint는 개별 파일 지원)
 
 set -e
 
-# Get the list of staged files
-STAGED_FILES="$@"
+echo "Running Android Lint on app module..."
 
-if [ -z "$STAGED_FILES" ]; then
-    echo "No Java/Kotlin files to lint"
-    exit 0
-fi
+# Run Android lint on the entire app
+./gradlew :app:lintDebug --quiet || {
+    echo "Android Lint found issues"
+    exit 1
+}
 
-echo "Running Android Lint on staged files..."
-
-# Create a temporary file list for lint
-TEMP_FILE_LIST=$(mktemp)
-for file in $STAGED_FILES; do
-    if [ -f "$file" ]; then
-        echo "$file" >> "$TEMP_FILE_LIST"
-    fi
-done
-
-# Run Android lint only on the staged files
-if [ -s "$TEMP_FILE_LIST" ]; then
-    echo "Linting files:"
-    cat "$TEMP_FILE_LIST"
-    
-    # Run lint with specific file filter
-    ./gradlew :app:lintDebug --quiet || {
-        echo "Android Lint found issues in staged files"
-        rm -f "$TEMP_FILE_LIST"
-        exit 1
-    }
-    
-    echo "Android Lint passed for staged files"
-else
-    echo "No valid files to lint"
-fi
-
-# Clean up
-rm -f "$TEMP_FILE_LIST"
+echo "Android Lint passed"

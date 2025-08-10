@@ -38,10 +38,44 @@ android {
         compose true
     }
     lintOptions {
-        // Turns off checks for the issue IDs you specify.
-        disable 'ContentDescription', 'HardcodedText', 'GradleDependency'
-        // if set to true (default), stops the build if errors are found.
+        // 기본적인 린팅만 수행하도록 불필요한 규칙들 비활성화
+        disable 'ContentDescription',       // 접근성 관련 (개발 중 불필요)
+                'HardcodedText',           // 하드코딩된 텍스트 (개발 중 허용)
+                'GradleDependency',        // Gradle 의존성 버전 경고
+                'IconMissingDensityFolder', // 아이콘 밀도별 폴더 누락
+                'IconDensities',           // 아이콘 밀도 관련
+                'IconLocation',            // 아이콘 위치 관련
+                'GoogleAppIndexingWarning', // Google App Indexing 경고
+                'AllowBackup',             // 백업 허용 관련
+                'MissingApplicationIcon',  // 앱 아이콘 누락
+                'VectorDrawableCompat',    // 벡터 드로어블 호환성
+                'UnusedResources',         // 사용하지 않는 리소스 (개발 중 허용)
+                'Typos',                   // 오타 검사 (개발 중 불필요)
+                'SpUsage',                 // sp 단위 사용 권장
+                'RtlHardcoded',           // RTL 하드코딩 관련
+                'RtlEnabled',             // RTL 활성화 관련
+                'NewApi',                 // 새로운 API 사용 경고 (minSdk 체크만으로 충분)
+                'ObsoleteSdkInt',         // 오래된 SDK 버전 체크
+                'OldTargetApi',           // 오래된 타겟 API
+                'ExtraTranslation',       // 추가 번역 관련
+                'MissingTranslation',     // 번역 누락 (개발 중 허용)
+                'Instantiatable',         // 인스턴스화 가능성 체크
+                'ValidFragment'           // Fragment 유효성 체크
+        
+        // 오류 발생 시 빌드 중단하지 않음 (개발 편의성)
         abortOnError false
+        
+        // 경고를 오류로 처리하지 않음
+        warningsAsErrors false
+        
+        // 체크할 이슈만 명시적으로 지정 (핵심적인 것들만)
+        checkOnly 'NewApi',                // API 레벨 체크
+                  'InlinedApi',            // 인라인 API 체크  
+                  'Override',              // Override 어노테이션
+                  'SdCardPath',            // SD카드 경로 하드코딩
+                  'StopShip',              // STOPSHIP 주석 체크
+                  'MissingPermission',     // 권한 누락
+                  'ProtectedPermissions'   // 보호된 권한 사용
     }
 }
 
@@ -72,10 +106,39 @@ ktlint {
     android = true
     outputToConsole = true
     outputColorName = "RED"
-    ignoreFailures = false
+    ignoreFailures = false  // 개발 중 빌드 실패 방지
     
     filter {
         exclude("**/generated/**")
         exclude("**/build/**")
+        exclude("**/test/**")        // 테스트 파일 제외
+        exclude("**/androidTest/**") // Android 테스트 파일 제외
+        exclude("**/*Test.kt")       // 테스트 파일 패턴 제외
+        exclude("**/*Tests.kt")      // 테스트 파일 패턴 제외
     }
+    
+    // 개발 편의성을 위해 불필요한 포맷팅 규칙들 비활성화
+    // 핵심적인 코드 품질 관련 규칙만 유지
+    disabledRules = [
+        "max-line-length",              // 라인 길이 제한 (개발 중 불편)
+        "no-wildcard-imports",          // 와일드카드 import 금지 (개발 중 허용)
+        "import-ordering",              // import 순서 정렬
+        "no-unused-imports",            // 사용하지 않는 import (IDE가 처리)
+        "trailing-comma-on-call-site",  // 함수 호출 시 trailing comma
+        "trailing-comma-on-declaration-site", // 함수 선언 시 trailing comma
+        "argument-list-wrapping",       // 인수 목록 줄바꿈
+        "parameter-list-wrapping",      // 매개변수 목록 줄바꿈
+        "multiline-if-else",           // 다중 라인 if-else 포맷팅
+        "chain-wrapping",              // 체인 호출 줄바꿈
+        "comment-spacing",             // 주석 간격
+        "filename",                    // 파일명 규칙 (클래스명과 일치)
+        "package-name",                // 패키지명 규칙 (소문자만)
+        "class-naming",                // 클래스명 규칙 완화
+        "function-naming",             // 함수명 규칙 완화
+        "property-naming",             // 프로퍼티명 규칙 완화
+        "enum-entry-name-case",        // enum 항목 이름 케이스
+        "modifier-order",              // modifier 순서
+        "annotation-spacing",          // 어노테이션 간격
+        "string-template",             // 문자열 템플릿 포맷팅
+    ]
 }

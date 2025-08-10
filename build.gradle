@@ -13,8 +13,16 @@ subprojects {
         description 'Check code convention'
         group 'verification'
         configFile file("${rootProject.rootDir}/tools/sun_checks.xml")
-        source 'src/main/java'
-        include '**/*.java'
+        
+        // 스테이징된 파일이 지정되면 해당 파일들만 검사, 아니면 전체 검사
+        if (project.hasProperty('checkstyle.source.files')) {
+            def stagedFiles = project.property('checkstyle.source.files').toString().split(' ')
+            source files(stagedFiles.findAll { it.endsWith('.java') && file(it).exists() })
+        } else {
+            source 'src/main/java'
+            include '**/*.java'
+        }
+        
         classpath = files()
         ignoreFailures = false
 
