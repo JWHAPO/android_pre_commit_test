@@ -4,5 +4,8 @@ class LowGuy {
     lateinit var Name: String
     fun LowGuy(name: String){
         this.Name = name
+        if (name == ""){
+
+        }
     }
 }
