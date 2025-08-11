@@ -39,6 +39,7 @@ if command -v ktlint >/dev/null 2>&1; then
     echo "Using ktlint binary..."
     
     # Run ktlint on specific files
+    # brew install ktlint -> ktlint 설치하여 개별 검사 하도록 ..
     ktlint $KOTLIN_FILES || {
         echo ""
         echo "❌ Kotlin Lint found code style violations!"
