@@ -37,17 +37,17 @@ subprojects {
             include '**/*'
             rename '(.*)', '$1'
         }
-        into "${rootDir}/../.git/hooks"
+        into "${rootDir}/.git/hooks"
     }
 
     task installGitHooks(type: Exec) {
         group 'git hooks'
-        workingDir "${rootDir}/.."
+        workingDir rootDir
         commandLine 'chmod'
         args '-R', '+x', '.git/hooks/'
         dependsOn copyGitHooks
     }
-
+    
     //상위의 폴더의 .git으로 옮기는 태스크
 //    tasks.register('copyGitHooks', Copy) {
 //        from("${rootDir}/git-hooks/") {
